@@ -1,14 +1,26 @@
-type Person = { person_age: number,
-               person_name: string,
-               person_alive: boolean };
+import { Navbar } from "@components/ui";
+import Head from "next/head";
+import { FCWC } from "../../types";
 
-
-type SnakeToCamelCase<S extends string|number|symbol> = S extends `${infer T}_${infer U}` ? `${T}${Capitalize<SnakeToCamelCase<U>>}` : S
-
-type SnakeToCamelCaseObject<T extends {}> = {
-  [Property in keyof T as SnakeToCamelCase<keyof T>]: T[Property]
+interface Props {
+  title?: string;
 }
 
-type T2 = SnakeToCamelCaseObject<Person>
-
-type T1 = SnakeToCamelCase<"hola_mundo">
+const Layout: FCWC<Props> = ({ children, title }) => {
+  return (
+    <>
+      <Head>
+        <title>{title || "Pokemon App"}</title>
+        <meta name="author" content="Eric Clemente" />
+        <meta
+          name="description"
+          content={`Información sobre el pokémon ${title}`}
+        />
+        <meta name="keywords" content={`${title},pokemon, pokedex`} />
+      </Head>
+      <Navbar />
+      <main style={{ padding: "0 20px" }}>{children}</main>
+    </>
+  );
+};
+export default Layout;
